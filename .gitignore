@@ -63,3 +63,6 @@ vcpkg-manifest-install.log
 vcpkg_installed/
 
 # End of https://www.toptal.com/developers/gitignore/api/cmake,vcpkg,c++
+
+# build
+build
