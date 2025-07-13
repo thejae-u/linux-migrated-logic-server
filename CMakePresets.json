@@ -1,0 +1,210 @@
+{
+  "version": 5,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 19,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default-linux-clang",
+      "displayName": "Default Linux (Clang++)",
+      "description": "Default configuration for Linux with Clang++",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/clang-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_C_COMPILER": "clang"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-linux-gcc",
+      "displayName": "Default Linux (g++)",
+      "description": "Default configuration for Linux with g++",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/gcc-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_C_COMPILER": "gcc"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "release-linux-clang",
+      "displayName": "Release Linux (Clang++)",
+      "description": "Release configuration for Linux with Clang++",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/clang-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "inherits": ["default-linux-clang"],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "release-linux-gcc",
+      "displayName": "Release Linux (g++)",
+      "description": "Release configuration for Linux with g++",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/gcc-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "inherits": ["default-linux-gcc"],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "default-macos-clang",
+      "displayName": "Default macOS (Clang++)",
+      "description": "Default configuration for macOS with Clang++",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/macos-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_C_COMPILER": "clang"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "release-macos-clang",
+      "displayName": "Release macOS (Clang++)",
+      "description": "Release configuration for macOS with Clang++",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/macos-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "inherits": ["default-macos-clang"],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "default-windows-msvc",
+      "displayName": "Default Windows (MSVC)",
+      "description": "Default configuration for Windows with MSVC",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build/msvc-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "release-windows-msvc",
+      "displayName": "Release Windows (MSVC)",
+      "description": "Release configuration for Windows with MSVC",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build/msvc-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      },
+      "inherits": ["default-windows-msvc"],
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug-build-clang-linux",
+      "displayName": "Build Debug (Clang/Linux)",
+      "configurePreset": "default-linux-clang",
+      "jobs": 0
+    },
+    {
+      "name": "debug-build-gcc-linux",
+      "displayName": "Build Debug (GCC/Linux)",
+      "configurePreset": "default-linux-gcc",
+      "jobs": 0
+    },
+    {
+      "name": "release-build-clang-linux",
+      "displayName": "Build Release (Clang/Linux)",
+      "configurePreset": "release-linux-clang",
+      "jobs": 0
+    },
+    {
+      "name": "release-build-gcc-linux",
+      "displayName": "Build Release (GCC/Linux)",
+      "configurePreset": "release-linux-gcc",
+      "jobs": 0
+    },
+    {
+      "name": "debug-build-clang-macos",
+      "displayName": "Build Debug (Clang/macOS)",
+      "configurePreset": "default-macos-clang",
+      "jobs": 0,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "release-build-clang-macos",
+      "displayName": "Build Release (Clang/macOS)",
+      "configurePreset": "release-macos-clang",
+      "jobs": 0,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
+      "name": "debug-build-msvc",
+      "displayName": "Build Debug (MSVC/Windows)",
+      "configurePreset": "default-windows-msvc",
+      "jobs": 0,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "release-build-msvc",
+      "displayName": "Build Release (MSVC/Windows)",
+      "configurePreset": "release-windows-msvc",
+      "jobs": 0,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    }
+  ]
+}
