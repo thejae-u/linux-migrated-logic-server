@@ -10,16 +10,6 @@ endif()
 set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "" FORCE)
 set(VCPKG_MANIFEST_MODE ON)
 
-# 이 triplet은 기존 x64-linux를 기반으로 합니다.
-set(VCPKG_TARGET_ARCHITECTURE x64)
-set(VCPKG_CRT_LINKAGE static)
-
-# ‼️ 가장 중요한 부분: 모든 라이브러리를 정적으로 링크하도록 설정합니다.
-set(VCPKG_LIBRARY_LINKAGE static)
-
-# 타겟 시스템을 Linux로 지정합니다.
-set(VCPKG_CMAKE_SYSTEM_NAME Linux)
-
 find_package(Boost REQUIRED COMPONENTS asio)
 find_package(Boost REQUIRED COMPONENTS uuid)
 find_package(spdlog CONFIG REQUIRED)
