@@ -12,7 +12,6 @@ using namespace boost::asio::ip;
 
 int main()
 {
-    std::cout << "Server Initialize...\n";
     const auto ctxThreadCount = static_cast<std::size_t>(std::thread::hardware_concurrency()) * 100;
     const std::size_t rpcCtxThreadCount = ctxThreadCount / 5;                  // 20% of total threads for RPC
     const std::size_t workCtxThreadCount = ctxThreadCount - rpcCtxThreadCount; // Remaining threads for work context
