@@ -12,27 +12,28 @@ using namespace boost::asio::ip;
 
 int main()
 {
-	const auto ctxThreadCount = static_cast<std::size_t>(std::thread::hardware_concurrency()) * 100;
-	const std::size_t rpcCtxThreadCount = ctxThreadCount / 5; // 20% of total threads for RPC
-	const std::size_t workCtxThreadCount = ctxThreadCount - rpcCtxThreadCount; // Remaining threads for work context
+    std::cout << "Server Initialize...\n";
+    const auto ctxThreadCount = static_cast<std::size_t>(std::thread::hardware_concurrency()) * 100;
+    const std::size_t rpcCtxThreadCount = ctxThreadCount / 5;                  // 20% of total threads for RPC
+    const std::size_t workCtxThreadCount = ctxThreadCount - rpcCtxThreadCount; // Remaining threads for work context
 
-	auto workThreadContext = std::make_shared<ContextManager>(workCtxThreadCount);
-	auto rpcThreadContext = std::make_shared<ContextManager>(rpcCtxThreadCount);
+    auto workThreadContext = std::make_shared<ContextManager>(workCtxThreadCount);
+    auto rpcThreadContext = std::make_shared<ContextManager>(rpcCtxThreadCount);
 
-	tcp::endpoint thisEndPoint(tcp::v4(), SERVER_PORT);
-	tcp::acceptor acceptor(workThreadContext->GetContext(), thisEndPoint);
-	
-	auto server = std::make_shared<Server>(workThreadContext, rpcThreadContext, acceptor);
+    tcp::endpoint thisEndPoint(tcp::v4(), SERVER_PORT);
+    tcp::acceptor acceptor(workThreadContext->GetContext(), thisEndPoint);
 
-	server->Start();
-	SPDLOG_INFO("{} Logic Server Started", __func__);
+    auto server = std::make_shared<Server>(workThreadContext, rpcThreadContext, acceptor);
 
-	std::cin.get();
+    server->Start();
+    SPDLOG_INFO("{} Logic Server Started", __func__);
 
-	server->Stop();
+    std::cin.get();
 
-	workThreadContext->Stop();
-	rpcThreadContext->Stop();
-	
-	return 0;
+    server->Stop();
+
+    workThreadContext->Stop();
+    rpcThreadContext->Stop();
+
+    return 0;
 }

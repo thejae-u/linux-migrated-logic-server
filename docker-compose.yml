@@ -1,0 +1,12 @@
+services:
+  logic-server:
+    image: logic-server-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # 컨테이너 이름 설정
+    container_name: logic-server-container
+    ports:
+      - 53200:53200
+    stdin_open: true
+    tty: true 

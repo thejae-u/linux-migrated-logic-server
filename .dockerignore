@@ -1,0 +1,12 @@
+# 빌드 결과물 디렉토리 제외
+build/
+.vs/
+*.sln
+*.vcxproj*
+
+# Git 관련 파일 제외
+.git/
+.gitignore
+
+# VSCode 설정 파일 제외
+.vscode/
